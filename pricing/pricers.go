@@ -14,6 +14,7 @@ func (b Bond) Price() float64 {
 	}
 	return p
 }
+
 func (ec EuropeanCall) price() float64 {
 	r := ec.R
 	t := ec.T

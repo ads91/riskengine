@@ -4,7 +4,7 @@ import (
 	"riskengine/environment"
 )
 
-var DailyTimeStep = float(1.0 / 365.0)
+var DailyTimeStep = float64(1.0 / 365.0)
 
 type Bond struct {
 	Curve  *environment.Curve
