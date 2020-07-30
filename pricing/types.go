@@ -2,9 +2,15 @@ package pricing
 
 import (
 	"riskengine/environment"
+
+	"github.com/ads91/utils"
 )
 
 var DailyTimeStep = float64(1.0 / 365.0)
+
+type HTTPPricer struct {
+	Env utils.Dict2
+}
 
 type Bond struct {
 	Curve  *environment.Curve

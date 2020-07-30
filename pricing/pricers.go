@@ -5,6 +5,7 @@ import (
 	"math/rand"
 )
 
+// Price a bond
 func (b Bond) Price() float64 {
 	c := b.Coupon
 	r := b.Curve.Rates
@@ -15,7 +16,9 @@ func (b Bond) Price() float64 {
 	return p
 }
 
-func (ec EuropeanCall) price() float64 {
+// Price a european call option
+func (ec EuropeanCall) Price() float64 {
+	// price
 	r := ec.R
 	t := ec.T
 	vol := ec.Vol
@@ -24,7 +27,7 @@ func (ec EuropeanCall) price() float64 {
 	k := ec.K
 	s1 := 0.0
 	for i := 0; i < n; i++ {
-		s2 := ec.S0
+		s2 := ec.s0
 		for j := 0; j < t*365; j++ {
 			s2 = s2 * (1.0 + r*dt + vol*math.Sqrt(dt)*rand.NormFloat64())
 		}
