@@ -1,7 +1,7 @@
 package environment
 
 import (
-	"github.com/ads91/utils"
+	"utils"
 )
 
 // NewCurve : instantiate a curve
