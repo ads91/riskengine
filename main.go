@@ -2,10 +2,10 @@ package main
 
 import (
 	"log"
-	"riskengine/pricing"
 	"sync"
 
 	"github.com/ads91/utils"
+	"github.com/preichenberger/go-coinbasepro/Documents/dev/go/src/riskengine/pricing"
 )
 
 var env = utils.LoadFromDir("/Users/andrewsanderson/Documents/dev/go/src/riskengine/data/env.json")
