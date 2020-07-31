@@ -1,13 +1,13 @@
 package environment
 
 import (
-	"utils"
+	"dict"
 )
 
 // NewCurve : instantiate a curve
-func NewCurve(curveType string, env utils.Dict2) *Curve {
+func NewCurve(curveType string, env dict.Dict2) *Curve {
 	curves := env["curves"]
-	curve := curves.(utils.Dict2)[curveType].(utils.Dict2)
+	curve := curves.(dict.Dict2)[curveType].(dict.Dict2)
 	return &Curve{
 		Tenors: interfaceToStringArray(curve["tenors"]),
 		Rates:  interfaceToFloat64Array(curve["rates"]),
