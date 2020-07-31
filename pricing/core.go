@@ -61,7 +61,6 @@ func PriceFromHTTPRequests(hp HTTPPricer, port string, uri string) {
 	log.Fatal(http.ListenAndServe(port, nil))
 }
 
-// unexposed
 func (hp HTTPPricer) httpPricingHandler(w http.ResponseWriter, r *http.Request) {
 	var d utils.Dict2
 	// parse form

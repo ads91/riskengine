@@ -1,0 +1,9 @@
+{
+    "bond_01": {
+        "type": "bond",
+        "args": {
+            "coupon": "1050.0",
+            "curve" : "libor"
+        }
+    }
+}

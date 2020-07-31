@@ -1,0 +1,13 @@
+{
+    "europeancall_01": {
+        "type": "europeancall",
+        "args": {
+            "startprice": "100.0",
+            "strike"    : "125.0",
+            "years"     : "5",
+            "rate"      : "0.025",
+            "vol"       : "1.0",
+            "paths"     : "50000"
+        }
+    }
+}
