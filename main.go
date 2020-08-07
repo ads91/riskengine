@@ -9,7 +9,8 @@ import (
 var env = dict.LoadFromDir("/Users/andrewsanderson/Documents/dev/go/src/riskengine/data/env.json")
 
 func main() {
-	runLocal()
+	//runLocal()
+	runHTTP(":8080", "/price")
 }
 
 func runLocal() {
@@ -23,4 +24,9 @@ func runLocal() {
 	go pricing.PriceFromDir(&wg, "/Users/andrewsanderson/Documents/dev/go/src/riskengine/data/europeancall_01.json", env)
 	// wait for the above routines to return
 	wg.Wait()
+}
+
+func runHTTP(port string, uri string) {
+	pricer := pricing.HTTPPricer{Env: env}
+	pricing.PriceFromHTTPRequests(pricer, port, uri)
 }
