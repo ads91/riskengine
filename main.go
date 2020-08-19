@@ -2,6 +2,8 @@ package main
 
 import (
 	"dict"
+	"log"
+	"os"
 	"riskengine/pricing"
 	"sync"
 )
@@ -9,6 +11,8 @@ import (
 var env = dict.LoadFromDir("/Users/andrewsanderson/Documents/dev/go/src/riskengine/data/env.json")
 
 func main() {
+	// register the PID
+	log.Printf("process ID is %d", os.Getpid())
 	//runLocal()
 	runHTTP(":8080", "/price")
 }
