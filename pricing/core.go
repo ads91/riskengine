@@ -1,11 +1,11 @@
 package pricing
 
 import (
-	"dict"
 	"encoding/json"
 	"log"
 	"net/http"
 	"riskengine/environment"
+	"riskengine/utils/dict"
 	"sync"
 )
 

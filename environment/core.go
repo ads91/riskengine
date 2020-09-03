@@ -1,7 +1,7 @@
 package environment
 
 import (
-	"dict"
+	"riskengine/utils/dict"
 )
 
 // NewCurve : instantiate a curve

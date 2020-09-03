@@ -1,8 +1,8 @@
 package pricing
 
 import (
-	"dict"
 	"riskengine/environment"
+	"riskengine/utils/dict"
 )
 
 // DailyTimeStep : a day expressed as a fraction of a year
