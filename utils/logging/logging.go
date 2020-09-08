@@ -27,7 +27,7 @@ func getGCPLogger(projectID string, logName string) *log.Logger {
 	// creates a client
 	client, err := logging.NewClient(ctx, projectID)
 	if err != nil {
-		log.Fatalf("Failed to create client: %v", err)
+		log.Fatalf("failed to create client: %v", err)
 	}
 	defer client.Close()
 	// sets the name of the log to write to
