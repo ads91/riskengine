@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"log"
 	"os"
 	"riskengine/config"
 	"riskengine/pricing"
@@ -9,8 +8,6 @@ import (
 	"riskengine/utils/logging"
 	"sync"
 )
-
-// GOPATH="/Users/andrewsanderson/Documents/dev/go"
 
 var log = logging.GetLogger()
 
