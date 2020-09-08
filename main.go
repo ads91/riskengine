@@ -8,9 +8,6 @@ import (
 	"sync"
 )
 
-// DEFAULTPORT : default port to listen on
-var DEFAULTPORT = ":8080"
-
 func main() {
 	// register the PID
 	log.Printf("process ID is %d", os.Getpid())
@@ -43,7 +40,7 @@ func getPort() string {
 	port := os.Getenv("PORT")
 	// default port
 	if port == "" {
-		port = DEFAULTPORT
+		port = DEFAULT_PORT
 	}
 	log.Printf("listening on port %s", port)
 
