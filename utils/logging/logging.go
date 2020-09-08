@@ -11,10 +11,13 @@ import (
 
 // GetLogger : return a logger according to conditions
 func GetLogger() *log.Logger {
+	// declare logger
+	var logger *log.Logger
+	// determine logger to return
 	if config.DEPLOYMENT_TYPE == 1 {
-		logger := getGCPLogger(config.GCP_PROJECT_ID, config.LOG_NAME)
+		logger = getGCPLogger(config.GCP_PROJECT_ID, config.LOG_NAME)
 	} else {
-		logger := log
+		logger = getLocalLogger()
 	}
 
 	return logger
@@ -36,11 +39,14 @@ func getGCPLogger(projectID string, logName string) *log.Logger {
 	return logger
 }
 
-func getLocalLogger() {
-	file, err := os.OpenFile("info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+func getLocalLogger() *log.Logger {
+	// open a file
+	file, err := os.OpenFile(os.Getenv(config.WORKING_DIR)+config.LOG_NAME, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer file.Close()
-	log.SetOutput(file)
+	// create the logger
+	logger := log.New(file, "", log.Ldate|log.Ltime|log.Lshortfile)
+
+	return logger
 }
