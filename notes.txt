@@ -1,2 +1,6 @@
 For advice on deploying to GCP using GitHub:
 https://medium.com/swlh/deploying-github-repository-to-google-cloud-platform-997d296547e6
+
+Local GOPATH:
+GOPATH="/Users/andrewsanderson/Documents/dev/go"
+

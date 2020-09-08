@@ -11,4 +11,4 @@ var WORKING_DIR = "RISK_ENGINE_DIR"
 var DEFAULT_PORT = ":8080"
 
 // LOG_NAME : name of cloud platform log file on GCP
-var LOG_NAME = "pricer-log.txt"
+var LOG_NAME = "riskengine-log.txt"

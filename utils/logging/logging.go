@@ -19,7 +19,6 @@ func GetLogger() *log.Logger {
 	} else {
 		logger = getLocalLogger()
 	}
-
 	return logger
 }
 
@@ -35,7 +34,6 @@ func getGCPLogger(projectID string, logName string) *log.Logger {
 	logger := client.Logger(logName).StandardLogger(logging.Info)
 	// logs "hello world", log entry is visible at stackdriver Logs
 	logger.Println("hello world")
-
 	return logger
 }
 
@@ -45,8 +43,6 @@ func getLocalLogger() *log.Logger {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// create the logger
-	logger := log.New(file, "", log.Ldate|log.Ltime|log.Lshortfile)
-
-	return logger
+	// create + return the logger
+	return log.New(file, "", log.Ldate|log.Ltime|log.Lshortfile)
 }

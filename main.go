@@ -1,13 +1,18 @@
 package main
 
 import (
-	"log"
+	//"log"
 	"os"
 	"riskengine/config"
 	"riskengine/pricing"
 	"riskengine/utils/dict"
+	"riskengine/utils/logging"
 	"sync"
 )
+
+// GOPATH="/Users/andrewsanderson/Documents/dev/go"
+
+var log = logging.GetLogger()
 
 func main() {
 	// register the PID
