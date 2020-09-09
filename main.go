@@ -25,7 +25,7 @@ func main() {
 	runHTTP("/price", env)
 }
 
-func runLocal(env dict.Dict2) {
+func runLocal(env dict.Dict) {
 	var wg sync.WaitGroup
 	// add some waits
 	wg.Add(4)
@@ -50,7 +50,7 @@ func getPort() string {
 	return ":"+port
 }
 
-func runHTTP(uri string, env dict.Dict2) {
+func runHTTP(uri string, env dict.Dict) {
 	pricer := pricing.HTTPPricer{Env: env}
 	// handle pricing requests
 	pricing.PriceFromHTTPRequests(pricer, getPort(), uri)

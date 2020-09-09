@@ -10,7 +10,7 @@ var DailyTimeStep = float64(1.0 / 365.0)
 
 // HTTPPricer : a wrapper for an HTTP handler func to accept a dict
 type HTTPPricer struct {
-	Env dict.Dict2
+	Env dict.Dict
 }
 
 // Bond : the representation of a bond

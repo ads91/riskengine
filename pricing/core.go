@@ -10,13 +10,13 @@ import (
 )
 
 // Price : price a trade (of acceptable type)
-func Price(trade dict.Dict2, env dict.Dict2) {
+func Price(trade dict.Dict, env dict.Dict) {
 	var price float64
 	// conversion for all products
 	for id, config := range trade {
-		config := config.(dict.Dict2)
+		config := config.(dict.Dict)
 		productType := config["type"]
-		args := config["args"].(dict.Dict2)
+		args := config["args"].(dict.Dict)
 		// check product type and instantiate accordingly
 		switch productType {
 		case "bond":
@@ -46,7 +46,7 @@ func Price(trade dict.Dict2, env dict.Dict2) {
 }
 
 // PriceFromDir : price a trade (JSON) located in a directory
-func PriceFromDir(wg *sync.WaitGroup, dir string, env dict.Dict2) {
+func PriceFromDir(wg *sync.WaitGroup, dir string, env dict.Dict) {
 	// don't return until method's complete
 	defer wg.Done()
 	Price(dict.LoadFromDir(dir), env)
@@ -61,7 +61,7 @@ func PriceFromHTTPRequests(hp HTTPPricer, port string, uri string) {
 }
 
 func (hp HTTPPricer) httpPricingHandler(w http.ResponseWriter, r *http.Request) {
-	var d dict.Dict2
+	var d dict.Dict
 	// parse form
 	err := r.ParseForm()
 	if err != nil {

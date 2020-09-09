@@ -5,9 +5,9 @@ import (
 )
 
 // NewCurve : instantiate a curve
-func NewCurve(curveType string, env dict.Dict2) *Curve {
+func NewCurve(curveType string, env dict.Dict) *Curve {
 	curves := env["curves"]
-	curve := curves.(dict.Dict2)[curveType].(dict.Dict2)
+	curve := curves.(dict.Dict)[curveType].(dict.Dict)
 	return &Curve{
 		Tenors: interfaceToStringArray(curve["tenors"]),
 		Rates:  interfaceToFloat64Array(curve["rates"]),
