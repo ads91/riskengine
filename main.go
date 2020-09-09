@@ -6,11 +6,8 @@ import (
 	"riskengine/config"
 	"riskengine/pricing"
 	"riskengine/utils/dict"
-	//"riskengine/utils/logging"
 	"sync"
 )
-
-//var log = logging.GetLogger()
 
 func main() {
 	// register the PID
@@ -50,8 +47,7 @@ func getPort() string {
 		port = config.DEFAULT_PORT
 	}
 	log.Printf("listening on port %s", port)
-
-	return port
+	return ":"+port
 }
 
 func runHTTP(uri string, env dict.Dict2) {

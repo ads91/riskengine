@@ -1,6 +1,5 @@
 For advice on deploying to GCP using GitHub:
 https://medium.com/swlh/deploying-github-repository-to-google-cloud-platform-997d296547e6
 
-Local GOPATH:
-GOPATH="/Users/andrewsanderson/Documents/dev/go"
-
+Cleaning up App on GCP/reducing costs incurred:
+https://cloud.google.com/appengine/docs/standard/python3/building-app/cleaning-up#disabling_your_application

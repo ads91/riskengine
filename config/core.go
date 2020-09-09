@@ -8,7 +8,7 @@ var DEPLOYMENT_TYPE = 0
 var WORKING_DIR = "RISK_ENGINE_DIR"
 
 // DEFAULT_PORT : default port to listen on
-var DEFAULT_PORT = ":8080"
+var DEFAULT_PORT = "8080"
 
 // LOG_NAME : name of cloud platform log file on GCP
 var LOG_NAME = "riskengine-log.txt"
