@@ -30,11 +30,8 @@ func getGCPLogger(projectID string, logName string) *log.Logger {
 		log.Fatalf("failed to create client: %v", err)
 	}
 	defer client.Close()
-	// sets the name of the log to write to
-	logger := client.Logger(logName).StandardLogger(logging.Info)
-	// logs "hello world", log entry is visible at stackdriver Logs
-	logger.Println("hello world")
-	return logger
+	// sets the name of the log to write to + return it
+	return client.Logger(logName).StandardLogger(logging.Info)
 }
 
 func getLocalLogger() *log.Logger {
