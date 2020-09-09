@@ -1,13 +1,14 @@
 package dict
 
 import (
+	"log"
 	"encoding/json"
 	"io/ioutil"
 	"strconv"
-	"riskengine/utils/logging"
+	//"riskengine/utils/logging"
 )
 
-var log = logging.GetLogger()
+//var log = logging.GetLogger()
 
 // Dict : a hash map of interface type key to interface type value
 type Dict map[interface{}]interface{}

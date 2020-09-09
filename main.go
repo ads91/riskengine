@@ -1,15 +1,16 @@
 package main
 
 import (
+	"log"
 	"os"
 	"riskengine/config"
 	"riskengine/pricing"
 	"riskengine/utils/dict"
-	"riskengine/utils/logging"
+	//"riskengine/utils/logging"
 	"sync"
 )
 
-var log = logging.GetLogger()
+//var log = logging.GetLogger()
 
 func main() {
 	// register the PID

@@ -1,15 +1,16 @@
 package pricing
 
 import (
+	"log"
 	"encoding/json"
 	"net/http"
 	"riskengine/environment"
 	"riskengine/utils/dict"
-	"riskengine/utils/logging"
+	//"riskengine/utils/logging"
 	"sync"
 )
 
-var log = logging.GetLogger()
+//var log = logging.GetLogger()
 
 // Price : price a trade (of acceptable type)
 func Price(trade dict.Dict2, env dict.Dict2) {

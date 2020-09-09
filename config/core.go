@@ -2,7 +2,7 @@
 package config
 
 // DEPLOYMENT_TYPE : deployment type, 0 for local, 1 for GCP
-var DEPLOYMENT_TYPE = 1
+var DEPLOYMENT_TYPE = 0
 
 // WORKING_DIR: the working directory of the main entry point
 var WORKING_DIR = "RISK_ENGINE_DIR"
