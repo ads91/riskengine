@@ -18,7 +18,7 @@ func Price(trades dict.Dict, env dict.Dict) dict.Dict {
 		productType := config["type"]
 		args := config["args"].(dict.Dict)
 		// check product type and instantiate accordingly
-		config["error"] = 0
+		config["error"] = false
 		switch productType {
 		case "bond":
 			curveType := args["curve"].(string)
@@ -39,7 +39,7 @@ func Price(trades dict.Dict, env dict.Dict) dict.Dict {
 			}
 			config["price"] = europeanCall.Price()
 		default:
-			config["error"] = 1
+			config["error"] = true
 			config["price"] = "unrecognised product type " + productType.(string)
 		}
 		results[id] = config
@@ -76,6 +76,15 @@ func (hp HTTPPricer) httpPricingHandler(w http.ResponseWriter, r *http.Request) 
 		log.Fatal(err)
 	}
 	// call the pricer
-	log.Print("recieved request to price ", d)
-	Price(d, hp.Env)
+	//log.Print("recieved request to price ", d)
+	results := Price(d, hp.Env)
+	// serialise the pricing results
+	js, err := json.Marshal(results)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	// return the JSON
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
