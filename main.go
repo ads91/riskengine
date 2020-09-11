@@ -21,8 +21,8 @@ func main() {
 	os.Setenv(config.WORKING_DIR, wd)
 	// create an instance of a market data environment
 	env := dict.LoadFromDir(wd + "/data/env.json")
-	//runLocal(env)
-	runHTTP("/price", env)
+	runLocal(env)
+	//runHTTP("/price", env)
 }
 
 func runLocal(env dict.Dict) {
@@ -47,7 +47,7 @@ func getPort() string {
 		port = config.DEFAULT_PORT
 	}
 	log.Printf("listening on port %s", port)
-	return ":"+port
+	return ":" + port
 }
 
 func runHTTP(uri string, env dict.Dict) {

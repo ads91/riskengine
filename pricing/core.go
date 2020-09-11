@@ -1,23 +1,24 @@
 package pricing
 
 import (
-	"log"
 	"encoding/json"
+	"log"
 	"net/http"
 	"riskengine/environment"
 	"riskengine/utils/dict"
 	"sync"
 )
 
-// Price : price a trade (of acceptable type)
-func Price(trade dict.Dict, env dict.Dict) {
-	var price float64
+// Price : price a dictionary of trades (of acceptable types)
+func Price(trades dict.Dict, env dict.Dict) dict.Dict {
+	var results = dict.Dict{}
 	// conversion for all products
-	for id, config := range trade {
+	for id, config := range trades {
 		config := config.(dict.Dict)
 		productType := config["type"]
 		args := config["args"].(dict.Dict)
 		// check product type and instantiate accordingly
+		config["error"] = 0
 		switch productType {
 		case "bond":
 			curveType := args["curve"].(string)
@@ -26,7 +27,7 @@ func Price(trade dict.Dict, env dict.Dict) {
 				Curve:  curve,
 				Coupon: dict.ConvDictFloat64(args["coupon"]),
 			}
-			price = bond.Price()
+			config["price"] = bond.Price()
 		case "europeancall":
 			europeanCall := EuropeanCall{
 				s0:  dict.ConvDictFloat64(args["startprice"]),
@@ -36,23 +37,24 @@ func Price(trade dict.Dict, env dict.Dict) {
 				Vol: dict.ConvDictFloat64(args["vol"]),
 				N:   dict.ConvDictInt(args["paths"]),
 			}
-			price = europeanCall.Price()
+			config["price"] = europeanCall.Price()
 		default:
-			log.Fatal("unrecognised product type: ", productType)
-			return
+			config["error"] = 1
+			config["price"] = "unrecognised product type " + productType.(string)
 		}
-		log.Printf("price for %s of type %s = %g", id, productType, price)
+		results[id] = config
 	}
+	return results
 }
 
-// PriceFromDir : price a trade (JSON) located in a directory
+// PriceFromDir : price some trades (JSON) located in a directory
 func PriceFromDir(wg *sync.WaitGroup, dir string, env dict.Dict) {
 	// don't return until method's complete
 	defer wg.Done()
-	Price(dict.LoadFromDir(dir), env)
+	log.Print(Price(dict.LoadFromDir(dir), env))
 }
 
-// PriceFromHTTPRequests : price a trade (JSON) sent through an HTTP request
+// PriceFromHTTPRequests : price some trades (JSON) sent through an HTTP request
 func PriceFromHTTPRequests(hp HTTPPricer, port string, uri string) {
 	// set-up the handler
 	http.HandleFunc(uri, hp.httpPricingHandler)
