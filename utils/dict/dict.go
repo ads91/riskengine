@@ -1,9 +1,9 @@
 package dict
 
 import (
-	"log"
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"strconv"
 )
 

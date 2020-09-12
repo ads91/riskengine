@@ -28,13 +28,10 @@ func main() {
 func runLocal(env dict.Dict) {
 	var wg sync.WaitGroup
 	// add some waits
-	wg.Add(4)
+	wg.Add(1)
 	// price the products
 	wd := os.Getenv(config.WORKING_DIR)
-	go pricing.PriceFromDir(&wg, wd+"/data/bond_01.json", env)
-	go pricing.PriceFromDir(&wg, wd+"/data/bond_02.json", env)
-	go pricing.PriceFromDir(&wg, wd+"/data/bond_03.json", env)
-	go pricing.PriceFromDir(&wg, wd+"/data/europeancall_01.json", env)
+	go pricing.PriceFromDir(&wg, wd+"/data/trades.json", env)
 	// wait for the above routines to return
 	wg.Wait()
 }
