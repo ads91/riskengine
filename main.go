@@ -6,10 +6,13 @@ import (
 	"riskengine/config"
 	"riskengine/pricing"
 	"riskengine/utils/dict"
+	"runtime"
 	"sync"
 )
 
 func main() {
+	// print the number of procs
+	log.Print("number of cores = ", runtime.NumCPU())
 	// register the PID
 	log.Printf("process ID is %d", os.Getpid())
 	// get working directory
