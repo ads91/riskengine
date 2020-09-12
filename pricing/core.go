@@ -27,6 +27,8 @@ func Price(trades dict.Dict, env dict.Dict) dict.Dict {
 		result := <-ch
 		results[result["id"].(string)] = result["trade"]
 	}
+	// log and return
+	log.Print("finished pricing: ", results)
 	return results
 }
 
@@ -70,7 +72,7 @@ func price(wg *sync.WaitGroup, id string, trade dict.Dict, env dict.Dict, ch cha
 func PriceFromDir(wg *sync.WaitGroup, dir string, env dict.Dict) {
 	// don't return until method's complete
 	defer wg.Done()
-	log.Print(Price(dict.LoadFromDir(dir), env))
+	Price(dict.LoadFromDir(dir), env)
 }
 
 // PriceFromHTTPRequests : price some trades (JSON) sent through an HTTP request
@@ -82,7 +84,7 @@ func PriceFromHTTPRequests(hp HTTPPricer, port string, uri string) {
 }
 
 func (hp HTTPPricer) httpPricingHandler(w http.ResponseWriter, r *http.Request) {
-	var d dict.Dict
+	var trades dict.Dict
 	// parse form
 	err := r.ParseForm()
 	if err != nil {
@@ -90,13 +92,12 @@ func (hp HTTPPricer) httpPricingHandler(w http.ResponseWriter, r *http.Request) 
 	}
 	// deserialise the JSON into a struct
 	decoder := json.NewDecoder(r.Body)
-	err = decoder.Decode(&d)
+	err = decoder.Decode(&trades)
 	if err != nil {
 		log.Fatal(err)
 	}
 	// call the pricer
-	//log.Print("recieved request to price ", d)
-	results := Price(d, hp.Env)
+	results := Price(trades, hp.Env)
 	// serialise the pricing results
 	js, err := json.Marshal(results)
 	if err != nil {
