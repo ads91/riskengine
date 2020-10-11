@@ -22,9 +22,9 @@ func Price(trades dict.Dict, env dict.Dict) dict.Dict {
 	}
 	// wait for the trades to price
 	wg.Wait()
-	// loop the channel until no more results to retrieve
-	for i := 0; i < len(trades); i++ {
-		result := <-ch
+	// close the chanel and recieve from it
+	close(ch)
+	for result := range ch {
 		results[result["id"].(string)] = result["trade"]
 	}
 	// log and return

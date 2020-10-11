@@ -24,8 +24,8 @@ func main() {
 	os.Setenv(config.WORKING_DIR, wd)
 	// create an instance of a market data environment
 	env := dict.LoadFromDir(wd + "/data/env.json")
-	//runLocal(env)
-	runHTTP("/price", env)
+	runLocal(env)
+	//runHTTP("/price", env)
 }
 
 func runLocal(env dict.Dict) {
