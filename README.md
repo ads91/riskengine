@@ -10,7 +10,7 @@ An online pricing engine for financial instruments. Instruments are respresented
 
 ## Supported instruments
 
-Below outlines the different financial instruments that are supported by the risk engine. Multiple instruments, different types, multiple of the same type or a combination of these is supported. The only requirement is that the top-level key for each instrument configuration is unique within the request. 
+Below outlines the different financial instruments that are supported by the risk engine. Multiple instruments, different types, multiple of the same type or a combination of these is supported. The only requirement is that the top-level key for each instrument configuration is unique within each request. 
 
 For each instrument type, it has an associated args key in its configuration, this specifies the model parameters required to price the given type of instrument.
 
@@ -39,18 +39,18 @@ The following JSON is a an example of a valid pricing request, consisting of two
 }
 ```
 
-The type key in an instrument's configuration acts as a switch within the risk engine to call the correct pricing analytics for that instrument. The following sections outline the specifics of the supported instruments and most importantly, the type parameters of those instruments.
+The type key in an instrument's configuration acts as a switch within the risk engine to call the correct pricing analytics for that instrument. The following sections outline the specifics of the supported instruments; the type parameters of those instruments and the required args by the risk engine to price those instruments.
 
 *Note: if an unrecognised instrument type exists in the pricing request, the return result will flag the instrument with an error. If the instrument pricing request has other valid requests, these will still price in accordance with the associated analytics.*
 
 ### European call option
 **type: europeancall**
 
-This instrument type is a simple vanilla european call option, which can apply to any product that has a zero-dimensional underlying price i.e. an FX rate, an equity price, a bond price etc. Its representation is as follows
+A vanilla european call option, which can apply to any product that has a zero-dimensional underlying price i.e. an FX rate, an equity price, a bond price etc. Its representation is as follows
 
 ```json
 {
-    "EURCALL001": {
+    "europeancall_001": {
             "type": "europeancall",
             "args": {
                 "startprice": "100.0",
@@ -78,6 +78,28 @@ where
 - Doesn't support underlyings of greater than zero dimensions i.e. a yield curve.
 - Discounting is done using a flat rate, rather than a relevant yield curve.
 - Doesn't derive volatility from historic prices, so is a user input.
+
+### Bond
+**type: bond**
+
+A vanilla bond. Pricing of the bond is performed using a discount curve - which implies the outstanding length of the bond.
+
+```json
+{    
+    "bond_001": {
+        "type": "bond",
+        "args": {
+            "coupon": "123.0",
+            "curve" : "libor"
+        }
+    }
+}
+```
+
+where
+
+- *coupon* is the amount payable to the bond holder on each date specified in the bond's curve
+- *curve* is a valid curve name stored in the market data environment, this specified the discounting curve to apply.
 
 ## Future enhancements
 
