@@ -6,7 +6,7 @@ An online back-end application for pricing financial instruments. The instrument
 
 ## Supported instruments
 
-1. European call option
+### European call option
 
 This instrument type is a simple vanilla european call option, which can apply to any product that has a zero-dimensional underlying price i.e. an FX rate, an equity price, a bond price etc. Its representation is as follows
 
@@ -28,12 +28,12 @@ This instrument type is a simple vanilla european call option, which can apply t
 
 where
 
-    startprice is the initial price of the underlying,
-    strike is the agreed strik price of the option,
-    years is the time until the option expires,
-    rate is the rate in which we discount the expected pay-off,
-    vol is the volatility of the underlying (to be calculated by the caller of the risk engine) and
-    paths is the number of monte-carlo simulations of the option pay-off.
+*startprice* is the initial price of the underlying,
+*strike* is the agreed strik price of the option,
+*years* is the time until the option expires,
+*rate* is the rate in which we discount the expected pay-off,
+*vol* is the volatility of the underlying (to be calculated by the caller of the risk engine) and
+*paths* is the number of monte-carlo simulations of the option pay-off.
 
 Model limitations
 
