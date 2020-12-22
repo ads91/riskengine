@@ -28,12 +28,12 @@ This instrument type is a simple vanilla european call option, which can apply t
 
 where
 
-    *startprice* is the initial price of the underlying,
-    *strike* is the agreed strik price of the option,
-    *years* is the time until the option expires,
-    *rate* is the rate in which we discount the expected pay-off,
-    *vol* is the volatility of the underlying (to be calculated by the caller of the risk engine) and
-    *paths* is the number of monte-carlo simulations of the option pay-off.
+- *startprice* is the initial price of the underlying,
+- *strike* is the agreed strik price of the option,
+- *years* is the time until the option expires,
+- *rate* is the rate in which we discount the expected pay-off,
+- *vol* is the volatility of the underlying (to be calculated by the caller of the risk engine) and
+- *paths* is the number of monte-carlo simulations of the option pay-off.
 
 Model limitations
 
