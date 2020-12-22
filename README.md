@@ -35,7 +35,7 @@ where
 - *vol* is the volatility of the underlying (to be calculated by the caller of the risk engine) and
 - *paths* is the number of monte-carlo simulations of the option pay-off.
 
-Model limitations
+###### Model limitations
 
 - Doesn't support underlyings of greater than zero dimensions i.e. a yield curve.
 - Discounting is done using a flat rate, rather than a relevant yield curve.
