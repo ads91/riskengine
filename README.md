@@ -22,7 +22,7 @@ Once successfully built, you should now have an executable called riskengine in 
 
 The risk engine will derive the port name to listen to incoming pricing requests from the "PORT" OS environment variable. If this doesn't exist, it'll default to 8080.
 
-In order to make a pricing request (assuming you've followed the guidelines outlined below for pricing request format and constraints) we need to make a post request (can use the Postman application) to the ../price end-point. For example, assuming we're running this on our local host, we should hit the following end-point with our JSON pricing request
+In order to make a pricing request (assuming you've followed the guidelines outlined below for pricing request format and constraints) we need to make a post request (can use the Postman application) to the price end-point. For example, assuming we're running this on our local host, we should hit the following end-point with our JSON pricing request
 
     localhost:8080/price
 
