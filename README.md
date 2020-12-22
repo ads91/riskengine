@@ -4,13 +4,27 @@
 
 An online pricing engine for financial instruments. Instruments are respresented as a JSON file and return a JSON with the calculated price.
 
+Multiple instrument types are supported and can be combined in one request, which will price them asynchronously.
+
 ## Usage
 
-...
+Have Go installed and added to your PATH OS environment variable. Navigate to where you'd like to clone the repo then run the following in your terminal/cmd prompt
+
+    $git clone https://github.com/ads91/riskengine.git
+
+This will clone the risk engine repo. Now build the risk engine executable (navigate into the riskengine directory)
+
+    $go build
+
+This should all succeed and you should now have an executable called riskengine in the riskengine directory. Now run the executable generated above
+
+    ./riskengine
+
+*Note: the risk engine can be used in an offline batch mode. To achieve this, comment out the call to runHTTP(..) and uncomment the call to runLocal(..) in main.go then rebuild the executable. The risk engine will now look to pick up a pricing request saved at /riskengine/data/trades.json (its formats at constraints are identical to those that are outlined below for the online service).*
 
 ## Supported instruments
 
-Below outlines the different financial instruments that are supported by the risk engine. Multiple instruments, different types, multiple of the same type or a combination of these is supported. The only requirement is that the top-level key for each instrument configuration is unique within each request. 
+Below outlines the different financial instruments that are supported by the risk engine. Multiple instruments, different instrument types, multiple of the same type or a combination of these is supported. The only requirement is that the top-level name for each instrument configuration is unique within a request. 
 
 For each instrument type, it has an associated args key in its configuration, this specifies the model parameters required to price the given type of instrument.
 
@@ -113,7 +127,7 @@ where
 
 ## Market data
 
-For some instrument types, data required for pricing the instrument is specified in the market data environment ("env"). The market data environment is a JSON that's saved within the risk engine folder structure (./riskengine/data/env.json).
+For some instrument types, data required for pricing the instrument is specified in the market data environment ("env"). The market data environment is a JSON that's saved within the risk engine folder structure (/riskengine/data/env.json).
 
 Top-level keys in the JSON refer to broad market data types i.e. curves, surfaces, etc. The pricing analytics layer accesses the market data by assuming a naming convention within the env. Therefore, if the exisiting naming structure is modified, it can potentially break existing analytics if not tested accordingly. 
 
