@@ -66,7 +66,7 @@ The returned JSON is also logged to the terminal/cmd prompt in which the ./riske
     2020/12/22 14:11:09 recieved request to price map[args:map[coupon:123.0 curve:libor] type:bond]
     2020/12/22 14:11:09 finished pricing: map[bond_01:map[args:map[coupon:123.0 curve:libor] error:false price:261.5202826833346 type:bond]]
 
-*Note: the risk engine can be used in an offline "batch mode". To achieve this, comment out the call to runHTTP(..) and uncomment the call to runLocal(..) in main.go then rebuild the executable. The risk engine will now look to pick up a pricing request saved at /riskengine/data/trades.json (its formats at constraints are identical to those for the online pricing service).*
+*Note: the risk engine can be used in an offline "batch mode". To achieve this, comment out the call to runHTTP(..) and uncomment the call to runLocal(..) in main.go then rebuild the executable. The risk engine will now look to pick up a pricing request saved at /riskengine/data/trades.json, its formats and constraints are identical to those for the online pricing service.*
 
 ## Supported instruments
 
