@@ -22,13 +22,13 @@ Once successfully built, you should now have an executable called riskengine in 
 
 The risk engine will derive the port name to listen to incoming pricing requests from the "PORT" OS environment variable. If this doesn't exist, it'll default to 8080.
 
-In order to make a pricing request (assuming you've followed the guidelines outlined below for pricing request format and constraints) we need to make a post request (can use the Postman application) to the price end-point. For example, assuming we're running this on our local host, we should hit the following end-point with our JSON pricing request
+In order to make a pricing request (assuming you've followed the guidelines outlined below for pricing request format and constraints) we need to make a POST request (can use the Postman application) to the price end-point. For example, assuming we're running this on our local host, we should hit the following end-point with our JSON pricing request
 
     localhost:8080/price
 
-This will return a JSON identical to the post request but with two new keys with the following
+This will return a JSON identical to the POST request but with two new keys with the following
 
-- **price** the price of the instrument that was requested to price or an error message if pricing failed and
+- **price** the price of the instrument that was requested to price or an error message if the pricing failed and
 - **error** true if there was an error pricing in the instrument from its configuration and false otherwise.
  
 An example request to price a single bond could be as follows (assuming our market data environment contains a libor curve - see below for a more detailed explanation of market data environments)
