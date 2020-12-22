@@ -2,7 +2,7 @@
 
 ## What is it?
 
-An online pricing engine for financial instruments. Instruments are respresented as a JSON file and return a JSON with the calculated price.
+An online pricing engine service for financial instruments. Instruments are respresented as a JSON file and return a JSON with the calculated price.
 
 Multiple instrument types are supported and can be combined in one request, which will price them asynchronously.
 
