@@ -8,19 +8,65 @@ Multiple instrument types are supported and can be combined in one request, whic
 
 ## Usage
 
-Have Go installed and added to your PATH OS environment variable. Navigate to where you'd like to clone the repo then run the following in your terminal/cmd prompt
+Have Go installed and added to your "PATH" OS environment variable. Navigate to where you'd like to clone the git repository then run the following in your terminal/cmd prompt
 
     $git clone https://github.com/ads91/riskengine.git
 
-This will clone the risk engine repo. Now build the risk engine executable (navigate into the riskengine directory)
+This will clone the risk engine git repository. Now build the risk engine executable (navigate into the riskengine directory)
 
     $go build
 
-This should all succeed and you should now have an executable called riskengine in the riskengine directory. Now run the executable generated above
+Once successfully built, you should now have an executable called riskengine in the riskengine directory. Run this executable
 
     ./riskengine
 
-*Note: the risk engine can be used in an offline batch mode. To achieve this, comment out the call to runHTTP(..) and uncomment the call to runLocal(..) in main.go then rebuild the executable. The risk engine will now look to pick up a pricing request saved at /riskengine/data/trades.json (its formats at constraints are identical to those that are outlined below for the online service).*
+The risk engine will derive the port name to listen to incoming pricing requests from the "PORT" OS environment variable. If this doesn't exist, it'll default to 8080.
+
+In order to make a pricing request (assuming you've followed the guidelines outlined below for pricing request format and constraints) we need to make a post request (can use the Postman application) to the ../price end-point. For example, assuming we're running this on our local host, we should hit the following end-point with our JSON pricing request
+
+    localhost:8080/price
+
+This will return a JSON identical to the post request but with two new keys with the following
+
+- **price** the price of the instrument that was requested to price or an error message if pricing failed and
+- **error** true if there was an error pricing in the instrument from its configuration and false otherwise.
+ 
+An example request to price a single bond could be as follows (assuming our market data environment contains a libor curve - see below for a more detailed explanation of market data environments)
+
+```json
+{    
+    "bond_01": {
+        "type": "bond",
+        "args": {
+            "coupon": "123.0",
+            "curve" : "libor"
+        }
+    }
+}
+```
+
+and its returned JSON would be
+
+```json
+{
+    "bond_01": {
+        "args": {
+            "coupon": "123.0",
+            "curve": "libor"
+        },
+        "error": false,
+        "price": 261.5202826833346,
+        "type": "bond"
+    }
+}
+```
+
+The returned JSON is also logged to the terminal/cmd prompt in which the ./riskengine command was run
+
+    2020/12/22 14:11:09 recieved request to price map[args:map[coupon:123.0 curve:libor] type:bond]
+    2020/12/22 14:11:09 finished pricing: map[bond_01:map[args:map[coupon:123.0 curve:libor] error:false price:261.5202826833346 type:bond]]
+
+*Note: the risk engine can be used in an offline "batch mode". To achieve this, comment out the call to runHTTP(..) and uncomment the call to runLocal(..) in main.go then rebuild the executable. The risk engine will now look to pick up a pricing request saved at /riskengine/data/trades.json (its formats at constraints are identical to those that are outlined below for the online service).*
 
 ## Supported instruments
 
@@ -125,9 +171,9 @@ where
 
 - Doesn't include the face value of the bond in the pricing, only the outstanding coupon payments, as implied by the curve.
 
-## Market data
+## Market data environment ("env")
 
-For some instrument types, data required for pricing the instrument is specified in the market data environment ("env"). The market data environment is a JSON that's saved within the risk engine folder structure (/riskengine/data/env.json).
+For some instrument types, data required for pricing the instrument is specified in a market data environment. The market data environment is a JSON that's saved within the risk engine folder structure (/riskengine/data/env.json).
 
 Top-level keys in the JSON refer to broad market data types i.e. curves, surfaces, etc. The pricing analytics layer accesses the market data by assuming a naming convention within the env. Therefore, if the exisiting naming structure is modified, it can potentially break existing analytics if not tested accordingly. 
 
