@@ -2,15 +2,19 @@
 
 ## What is it?
 
-An online back-end application for pricing financial instruments. The instruments are respresented as a JSON file and return a JSON with the calculated price.
+An online pricing engine for financial instruments. Instruments are respresented as a JSON file and return a JSON with the calculated price.
 
 ## Usage
 
-
+...
 
 ## Supported instruments
 
-Below outlines the different financial instruments that are supported by the risk engine. Multiple instruments, different types, multiple of the same type or a mixture of these is supported. The only requirement is that the top-level key for each instrument configuration is unique. The following JSON is a completely valid pricing request:
+Below outlines the different financial instruments that are supported by the risk engine. Multiple instruments, different types, multiple of the same type or a combination of these is supported. The only requirement is that the top-level key for each instrument configuration is unique within the request. 
+
+For each instrument type, it has an associated args key in its configuration, this specifies the model parameters required to price the given type of instrument.
+
+The following JSON is a an example of a valid pricing request, consisting of two instrument configurations for instrument type "INSTRUMENT_A" and one instrument configuration for instrument type "INSTRUMENT_B", both of which are hypothetical instrument types.
 
 ```json
 {
@@ -77,6 +81,6 @@ where
 
 ## Future enhancements
 
-1. The market data environment is currently picked up from a static location (inside the repo). This should really be sent as part of the POST request to the application. In the simplest case, the environment is small - containing only one curve. However, depending on the use case i.e. the numbers of instruments to price, the complexity of those instruments, the market data environment could grow substantially and hence this will need to be taken into consideration.
+1. The market data environment is currently picked up from a static location (inside the repo). This should really be sent as part of the POST request to the application. In the simplest case, the environment is small - containing only one curve. However, depending on the use case i.e. the number of instruments to price, the complexity of those instruments, the market data environment could grow substantially leading to latency issues.
 
 2. Provide support for other trade representations, i.e. CSV, XML.
