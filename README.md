@@ -14,25 +14,25 @@ Below outlines the different financial instruments that are supported by the ris
 
 For each instrument type, it has an associated args key in its configuration, this specifies the model parameters required to price the given type of instrument.
 
-The following JSON is a an example of a valid pricing request, consisting of two instrument configurations for instrument type "INSTRUMENT_A" and one instrument configuration for instrument type "INSTRUMENT_B", both of which are hypothetical instrument types.
+The following JSON is a an example of a valid pricing request, consisting of two instrument configurations for instrument type "instrument_a" and one instrument configuration for instrument type "instrument_b", both of which are hypothetical instrument types.
 
 ```json
 {
     ...,
-    "INSTRUMENT_A_001": {
-        "type": "INSTRUMENT_A",
+    "instrument_a_001": {
+        "type": "instrument_a",
         "args": {
             ...
         }
     },
-    "INSTRUMENT_A_002": {
-        "type": "INSTRUMENT_A",
+    "instrument_a_002": {
+        "type": "instrument_a",
         "args": {
             ...
         }
     },
-    "INSTRUMENT_B_001": {
-        "type": "INSTRUMENT_B",
+    "instrument_b_001": {
+        "type": "instrument_b",
         "args": {
             ...
         }
@@ -104,8 +104,8 @@ A vanilla bond. Pricing of the bond is performed using a discount curve - which 
 
 where
 
-- *coupon* is the amount payable to the bond holder on each date specified in the bond's curve and
-- *curve* is a valid curve name stored in the market data environment, this specifies the discounting curve to apply and on which dates (tenors).
+- **coupon** is the amount payable to the bond holder on each date specified in the bond's curve and
+- **curve** is a valid curve name stored in the market data environment, this specifies the rates to convert to discounting factors to levy on the coupons and the dates associated with those rates.
 
 #### Model limitations
 
@@ -126,14 +126,14 @@ Below we outline the supported market data types and their required structure. T
 ### Curves
 **key: curves**
 
-A curve is a one-dimensional representation of dates (tenors) against rates. The tenors can be strings or numeric, it is down to the particular use case in the pricing anlytics as to how they're used. The rates are to be numeric. An example curve is as follows
+A curve is a one-dimensional representation of dates (tenors) against rates. The tenors can be strings or numeric the rates are to be numeric. An example curve is as follows
 
 ```json
 {   
     ...,
     "curves": {
         ...,
-        "libor": {
+        "curve_a": {
             "tenors": ["1y", "2y", "3y", "4y", "5y"],
             "rates" : [0.15, 0.30, 0.35, 0.50, 0.75]
         },
@@ -145,9 +145,11 @@ A curve is a one-dimensional representation of dates (tenors) against rates. The
 
 where 
 
-- *libor* (can be any name) is a user-defined name that prescribes some meaning to the curve,
-- *tenors* is a required key and lists the dates of the curve and
-- *rates* are the rates which are sequantially associated with the tenors listed above (the list must be the same length as the tenors).
+- *curve_a* (can be any name) is a user-defined name that prescribes some meaning to the curve,
+- *tenors* contains a list of the dates of the curve and
+- *rates* is the list of rates which are sequantially associated with the tenors outlined above.
+
+*Note: the length of the tenors list and rates list in a curve entry must be the same.*
 
 ## Future enhancements
 
