@@ -18,24 +18,26 @@ The following JSON is a an example of a valid pricing request, consisting of two
 
 ```json
 {
+    ...,
     "INSTRUMENT_A_001": {
-            "type": "INSTRUMENT_A",
-            "args": {
-                ...
-            }
-        },
-    "INSTRUMENT_A_002": {
-            "type": "INSTRUMENT_A",
-            "args": {
-                ...
-            }
-        },
-    "INSTRUMENT_B_001": {
-            "type": "INSTRUMENT_B",
-            "args": {
-                ...
-            }
+        "type": "INSTRUMENT_A",
+        "args": {
+            ...
         }
+    },
+    "INSTRUMENT_A_002": {
+        "type": "INSTRUMENT_A",
+        "args": {
+            ...
+        }
+    },
+    "INSTRUMENT_B_001": {
+        "type": "INSTRUMENT_B",
+        "args": {
+            ...
+        }
+    },
+    ...
 }
 ```
 
@@ -52,16 +54,16 @@ A vanilla european call option, which can apply to any product that has a zero-d
 {
     ...,
     "europeancall_001": {
-            "type": "europeancall",
-            "args": {
-                "startprice": "100.0",
-                "strike"    : "125.0",
-                "years"     : "5",
-                "rate"      : "0.025",
-                "vol"       : "1.0",
-                "paths"     : "100000"
-            }
-        },
+        "type": "europeancall",
+        "args": {
+            "startprice": "100.0",
+            "strike"    : "125.0",
+            "years"     : "5",
+            "rate"      : "0.025",
+            "vol"       : "1.0",
+            "paths"     : "100000"
+        }
+    },
     ...
 }
 ```
