@@ -82,7 +82,7 @@ where
 ### Bond
 **type: bond**
 
-A vanilla bond. Pricing of the bond is performed using a discount curve - which implies the outstanding length of the bond.
+A vanilla bond. Pricing of the bond is performed using a discount curve - which implies the outstanding payment schedule of the bond.
 
 ```json
 {    
@@ -99,10 +99,22 @@ A vanilla bond. Pricing of the bond is performed using a discount curve - which 
 where
 
 - *coupon* is the amount payable to the bond holder on each date specified in the bond's curve
-- *curve* is a valid curve name stored in the market data environment, this specified the discounting curve to apply.
+- *curve* is a valid curve name stored in the market data environment, this specifies the discounting curve to apply.
+
+## Market data
+
+For some instrument types, pricing data is specified in the market data environment (sometimes referred to as just "env"). The market data environment is a JSON that's saved down under the risk engine folder structure (./riskengine/data/env.json).
+
+Top-level keys in the JSON refer to broad market data types i.e. curves, surfaces, etc. The pricing analytics layer accesses the market data by assuming a naming convention within the env. Therefore, if the naming structure is modified to cater for new market data, it can potentially break existing analytics. 
+
+Adding new levels to the env is done at the discretion of the developer. However, adhering to the existing structure is best practice i.e. if a new discounting curve is required, it should be assigned a new name and saved under the curves top-level key.
+
+Below we outline the support market data types and their required structure. This of course varies through time and is a function of what the pricing analytics layer deems necessary. Some market data may have attributes that are not required by other market data within the same top-level group, once again emphasising the developer's discretion.
+
+*Note: if market data is calculated dynamically or needs to be refreshed, the newly generated env.json will need to be saved over the existing one and the risk engine application restarted in order to load the market data in to memory.*
 
 ## Future enhancements
 
-1. The market data environment is currently picked up from a static location (inside the repo). This should really be sent as part of the POST request to the application. In the simplest case, the environment is small - containing only one curve. However, depending on the use case i.e. the number of instruments to price, the complexity of those instruments, the market data environment could grow substantially leading to latency issues.
+1. The market data environment is currently picked up from a static location (inside the repo). This should really be parameterised as part of the POST request to the application. In the simplest case, the environment is small - containing only one curve. However, depending on the use case i.e. the number of instruments to price, the complexity of those instruments, the market data environment could grow substantially leading to latency issues.
 
 2. Provide support for other trade representations, i.e. CSV, XML.
