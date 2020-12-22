@@ -10,6 +10,7 @@ An online back-end application for pricing financial instruments. The instrument
 
 This instrument type is a simple vanilla european call option, which can apply to any product that has a zero-dimensional underlying price i.e. an FX rate, an equity price, a bond price etc. Its representation is as follows
 
+```json
 {
     "ID001": {
             "type": "europeancall",
@@ -23,6 +24,7 @@ This instrument type is a simple vanilla european call option, which can apply t
             }
         }
 }
+```
 
 where
 
