@@ -50,6 +50,7 @@ A vanilla european call option, which can apply to any product that has a zero-d
 
 ```json
 {
+    ...,
     "europeancall_001": {
             "type": "europeancall",
             "args": {
@@ -60,7 +61,8 @@ A vanilla european call option, which can apply to any product that has a zero-d
                 "vol"       : "1.0",
                 "paths"     : "100000"
             }
-        }
+        },
+    ...
 }
 ```
 
@@ -82,36 +84,68 @@ where
 ### Bond
 **type: bond**
 
-A vanilla bond. Pricing of the bond is performed using a discount curve - which implies the outstanding payment schedule of the bond.
+A vanilla bond. Pricing of the bond is performed using a discount curve - which implies the outstanding payment schedule of the bond. Its representation is as follows
 
 ```json
-{    
+{   
+    ...,
     "bond_001": {
         "type": "bond",
         "args": {
             "coupon": "123.0",
             "curve" : "libor"
         }
-    }
+    },
+    ...
 }
 ```
 
 where
 
-- *coupon* is the amount payable to the bond holder on each date specified in the bond's curve
-- *curve* is a valid curve name stored in the market data environment, this specifies the discounting curve to apply.
+- *coupon* is the amount payable to the bond holder on each date specified in the bond's curve and
+- *curve* is a valid curve name stored in the market data environment, this specifies the discounting curve to apply and on which dates (tenors).
+
+#### Model limitations
+
+- Doesn't include the face value of the bond in the pricing, only the outstanding coupon payments, as implied by the curve.
 
 ## Market data
 
-For some instrument types, pricing data is specified in the market data environment (sometimes referred to as just "env"). The market data environment is a JSON that's saved down under the risk engine folder structure (./riskengine/data/env.json).
+For some instrument types, data required for pricing the instrument is specified in the market data environment ("env"). The market data environment is a JSON that's saved within the risk engine folder structure (./riskengine/data/env.json).
 
-Top-level keys in the JSON refer to broad market data types i.e. curves, surfaces, etc. The pricing analytics layer accesses the market data by assuming a naming convention within the env. Therefore, if the naming structure is modified to cater for new market data, it can potentially break existing analytics. 
+Top-level keys in the JSON refer to broad market data types i.e. curves, surfaces, etc. The pricing analytics layer accesses the market data by assuming a naming convention within the env. Therefore, if the exisiting naming structure is modified, it can potentially break existing analytics if not tested accordingly. 
 
-Adding new levels to the env is done at the discretion of the developer. However, adhering to the existing structure is best practice i.e. if a new discounting curve is required, it should be assigned a new name and saved under the curves top-level key.
+Adding new levels to the env is done at the discretion of the developer. However, adhering to the existing structure is best practice i.e. if a new pricing curve is required, it should be assigned a name and saved under the existing curves top-level key.
 
-Below we outline the support market data types and their required structure. This of course varies through time and is a function of what the pricing analytics layer deems necessary. Some market data may have attributes that are not required by other market data within the same top-level group, once again emphasising the developer's discretion.
+Below we outline the supported market data types and their required structure. This evolves through time and is a function of what the pricing analytics layer deems necessary - so the structure of the env is a function of the pricing analytics and the pricing analytics is a function of the env.
 
 *Note: if market data is calculated dynamically or needs to be refreshed, the newly generated env.json will need to be saved over the existing one and the risk engine application restarted in order to load the market data in to memory.*
+
+### Curves
+**key: curves**
+
+A curve is a one-dimensional representation of dates (tenors) against rates. The tenors can be strings or numeric, it is down to the particular use case in the pricing anlytics as to how they're used. The rates are to be numeric. An example curve is as follows
+
+```json
+{   
+    ...,
+    "curves": {
+        ...,
+        "libor": {
+            "tenors": ["1y", "2y", "3y", "4y", "5y"],
+            "rates" : [0.15, 0.30, 0.35, 0.50, 0.75]
+        },
+        ...
+    },
+    ...
+}
+```
+
+where 
+
+- *libor* (can be any name) is a user-defined name that prescribes some meaning to the curve,
+- *tenors* is a required key and lists the dates of the curve and
+- *rates* are the rates which are sequantially associated with the tenors listed above (the list must be the same length as the tenors).
 
 ## Future enhancements
 
