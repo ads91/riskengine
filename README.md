@@ -61,7 +61,7 @@ and its returned JSON would be
 }
 ```
 
-The returned JSON is also logged to the terminal/cmd prompt in which the ./riskengine command was run
+The returned JSON is also logged to the terminal/cmd prompt in which the riskengine executable was executed
 
     2020/12/22 14:11:09 recieved request to price map[args:map[coupon:123.0 curve:libor] type:bond]
     2020/12/22 14:11:09 finished pricing: map[bond_01:map[args:map[coupon:123.0 curve:libor] error:false price:261.5202826833346 type:bond]]
