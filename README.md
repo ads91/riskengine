@@ -18,7 +18,7 @@ This will clone the risk engine git repository. Now build the risk engine execut
 
 Once successfully built, you should now have an executable called riskengine in the riskengine directory. Run this executable
 
-    ./riskengine
+    $./riskengine
 
 The risk engine will derive the port name to listen to incoming pricing requests from the "PORT" OS environment variable. If this doesn't exist, it'll default to 8080.
 
