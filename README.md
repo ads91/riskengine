@@ -4,7 +4,7 @@
 
 An online pricing engine service for financial instruments. Pricing requests are respresented as a JSON file and return a JSON with the calculated price.
 
-Multiple instrument types are supported and can be combined in one request, which will price them asynchronously.
+Multiple instrument types are supported and can be combined in one request, which are priced asynchronously.
 
 ## Usage
 
@@ -22,14 +22,14 @@ Once successfully built, you should now have an executable called riskengine in 
 
 The risk engine will derive the port name to listen to incoming pricing requests from the "PORT" OS environment variable. If this doesn't exist, it'll default to 8080.
 
-In order to make a pricing request (assuming you've followed the guidelines outlined below for pricing request format and constraints) we need to make a POST request (can use the Postman application) to the price end-point. For example, assuming we're running this on our local host, we should hit the following end-point with our JSON pricing request
+In order to make a pricing request (assuming you've followed the guidelines outlined below for pricing request format and constraints) we need to make a POST request (i.e using the Postman application) to the price end-point. For example, assuming we're running this on our local host, we should hit the following end-point with our JSON pricing request
 
     localhost:8080/price
 
-This will return a JSON identical to the POST request but with two new keys with the following
+This will return a JSON identical to the POST request but with two new keys:
 
 - **price** the price of the instrument that was requested to price or an error message if the pricing failed and
-- **error** true if there was an error pricing in the instrument from its configuration and false otherwise.
+- **error** true if there was an error pricing the instrument and false otherwise.
  
 An example request to price a single bond could be as follows (assuming our market data environment contains a libor curve - see below for a more detailed explanation of market data environments)
 
@@ -61,7 +61,7 @@ and its returned JSON would be
 }
 ```
 
-The returned JSON is also logged to the terminal/cmd prompt in which the riskengine executable was executed
+The returned JSON is also logged to the terminal/cmd prompt in which the riskengine executable was executed:
 
     2020/12/22 14:11:09 recieved request to price map[args:map[coupon:123.0 curve:libor] type:bond]
     2020/12/22 14:11:09 finished pricing: map[bond_01:map[args:map[coupon:123.0 curve:libor] error:false price:261.5202826833346 type:bond]]
@@ -103,7 +103,7 @@ The following JSON is a an example of a valid pricing request, consisting of two
 
 The type key in an instrument's configuration acts as a switch within the risk engine to call the correct pricing analytics for that instrument. The following sections outline the specifics of the supported instruments; the type parameters of those instruments and the required args by the risk engine to price those instruments.
 
-*Note: if an unrecognised instrument type exists in the pricing request, the return result will flag the instrument with an error. If the instrument pricing request has other valid requests, these will still price in accordance with the associated analytics.*
+*Note: if an unrecognised instrument type exists in the pricing request, the return result will flag the instrument with an error. If the pricing request has other valid instrument types, these will still price in accordance with their analytics.*
 
 ### European call option
 **type: europeancall**
@@ -131,7 +131,7 @@ A vanilla european call option, which can apply to any product that has a zero-d
 where
 
 - **startprice** is the initial price of the underlying,
-- **strike** is the agreed strik price of the option,
+- **strike** is the agreed strike price of the option,
 - **years** is the time until the option expires,
 - **rate** is the rate in which we discount the expected pay-off,
 - **vol** is the volatility of the underlying (to be calculated by the caller of the risk engine) and
@@ -181,7 +181,7 @@ Adding new levels to the env is done at the discretion of the developer. However
 
 Below we outline the supported market data types and their required structure. This evolves through time and is a function of what the pricing analytics layer deems necessary - so the structure of the env is a function of the pricing analytics and the pricing analytics is a function of the env.
 
-*Note: if market data is calculated dynamically or needs to be refreshed, the newly generated env.json will need to be saved over the existing one and the risk engine application restarted in order to load the market data in to memory.*
+*Note: if market data is calculated dynamically or needs to be refreshed, the newly generated JSON env will need to be saved over the existing one and the risk engine application restarted in order to load the market data in to memory.*
 
 ### Curves
 **key: curves**
